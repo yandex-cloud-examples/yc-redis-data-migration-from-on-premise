@@ -1,5 +1,3 @@
-# Название сценария
+# Миграция базы данных из стороннего кластера Redis в Yandex Managed Service for Redis
 
-Описание сценария и инструкция по его применению.
-
-Для практических руководств обязательна ссылка на документацию.
+Вы можете перенести данные из стороннего кластера-источника Redis в кластер-приемник [Managed Service for Redis](https://yandex.cloud/ru/docs/managed-redis) с помощью создания логического дампа и восстановления из него. Подготовка инфраструктуры для Managed Service for Redis через Terraform описана в [практическом руководстве](https://yandex.cloud/ru/docs/tutorials/dataplatform/redis-data-migration), необходимые для настройки конфигурационные файлы [redis-cluster-non-sharded.tf](redis-cluster-non-sharded.tf) и [redis-cluster-sharded.tf](redis-cluster-sharded.tf) расположены в этом репозитории.
