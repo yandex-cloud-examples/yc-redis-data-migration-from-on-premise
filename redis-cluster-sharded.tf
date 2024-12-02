@@ -1,4 +1,4 @@
-# Infrastructure for the Yandex Cloud Managed Service for Redis sharded cluster and Virtual Machine
+# Infrastructure for the Yandex Managed Service for Valkey sharded cluster and Virtual Machine
 #
 # RU: https://cloud.yandex.ru/docs/managed-redis/tutorials/redis-as-php-sessions-storage
 # EN: https://cloud.yandex.com/en/docs/managed-redis/tutorials/redis-as-php-sessions-storage
@@ -8,8 +8,8 @@ locals {
   zone_a_v4_cidr_blocks = "10.1.0.0/16" # Set the CIDR block for subnet in the ru-central1-a availability zone.
   zone_b_v4_cidr_blocks = "10.2.0.0/16" # Set the CIDR block for subnet in the ru-central1-b availability zone.
   zone_c_v4_cidr_blocks = "10.3.0.0/16" # Set the CIDR block for subnet in the ru-central1-c availability zone.
-  # Managed Service for Redis cluster.
-  redis_version = "6.2"    # Set the Redis version.
+  # Yandex Managed Service for Valkey cluster.
+  redis_version = "6.2"    # Set the Valkey version.
   password      = ""       # Set the cluster password.
   shard_name1   = "shard1" # Set the name for the first shard.
   shard_name2   = "shard2" # Set the name for the first shard.
@@ -21,7 +21,7 @@ locals {
 }
 
 resource "yandex_vpc_network" "network" {
-  description = "Network for the Managed Service for Redis cluster and VM"
+  description = "Network for the Yandex Managed Service for Valkey cluster and VM"
   name        = "network"
 }
 
@@ -50,7 +50,7 @@ resource "yandex_vpc_subnet" "subnet-c" {
 }
 
 resource "yandex_vpc_security_group" "security-group-redis" {
-  description = "Security group for the Managed Service for Redis cluster"
+  description = "Security group for the Yandex Managed Service for Valkey cluster"
   network_id  = yandex_vpc_network.network.id
 
   # Required for clusters created with TLS
@@ -99,7 +99,7 @@ resource "yandex_vpc_security_group" "security-group-redis" {
 #}
 
 resource "yandex_mdb_redis_cluster" "redis-cluster" {
-  description        = "Security group for the Managed Service for Redis cluster"
+  description        = "Security group for the Yandex Managed Service for Valkey cluster"
   name               = "redis-cluster"
   environment        = "PRODUCTION"
   network_id         = yandex_vpc_network.network.id
