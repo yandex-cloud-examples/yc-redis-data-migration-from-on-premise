@@ -7,9 +7,9 @@
 locals {
   zone_a_v4_cidr_blocks = "10.1.0.0/16" # Set the CIDR block for subnet in the ru-central1-a availability zone.
   zone_b_v4_cidr_blocks = "10.2.0.0/16" # Set the CIDR block for subnet in the ru-central1-b availability zone.
-  zone_c_v4_cidr_blocks = "10.3.0.0/16" # Set the CIDR block for subnet in the ru-central1-c availability zone.
+  zone_d_v4_cidr_blocks = "10.3.0.0/16" # Set the CIDR block for subnet in the ru-central1-d availability zone.
   # Yandex Managed Service for Valkey cluster.
-  redis_version = "6.2"    # Set the Valkey version.
+  redis_version = "7.2"    # Set the Valkey version.
   password      = ""       # Set the cluster password.
   shard_name1   = "shard1" # Set the name for the first shard.
   shard_name2   = "shard2" # Set the name for the first shard.
@@ -41,12 +41,12 @@ resource "yandex_vpc_subnet" "subnet-b" {
   v4_cidr_blocks = [local.zone_b_v4_cidr_blocks]
 }
 
-resource "yandex_vpc_subnet" "subnet-c" {
-  description    = "Subnet in the ru-central1-c availability zone"
-  name           = "subnet-c"
-  zone           = "ru-central1-c"
+resource "yandex_vpc_subnet" "subnet-d" {
+  description    = "Subnet in the ru-central1-d availability zone"
+  name           = "subnet-d"
+  zone           = "ru-central1-d"
   network_id     = yandex_vpc_network.network.id
-  v4_cidr_blocks = [local.zone_c_v4_cidr_blocks]
+  v4_cidr_blocks = [local.zone_d_v4_cidr_blocks]
 }
 
 resource "yandex_vpc_security_group" "security-group-redis" {
@@ -133,8 +133,8 @@ resource "yandex_mdb_redis_cluster" "redis-cluster" {
   }
 
   host {
-    zone             = "ru-central1-c"
-    subnet_id        = yandex_vpc_subnet.subnet-c.id
+    zone             = "ru-central1-d"
+    subnet_id        = yandex_vpc_subnet.subnet-d.id
     shard_name       = local.shard_name3
     assign_public_ip = true # Required for connection from the Internet. For a method without VM.
   }
