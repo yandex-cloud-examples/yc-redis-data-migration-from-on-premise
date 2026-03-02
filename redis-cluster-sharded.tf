@@ -16,7 +16,7 @@ locals {
   # (Optional) Settings for the VM in Yandex Compute Cloud. Uncomment these lines if you use a VM to connect to the cluster.
   # vm_image_id   = "" # Public image ID for the VM in Yandex Compute Cloud. See: https://cloud.yandex.com/en/docs/compute/operations/images-with-pre-installed-software/get-list.
   # vm_username   = "" # Username for the VM in Yandex Compute Cloud. Ubuntu images use the `ubuntu` username by default.
-  # vm_public_key = "" # Full path to the SSH public key for the in Yandex Compute Cloud
+  # vm_public_key = "" # Full path to the SSH public key for the VM in Yandex Compute Cloud
 
   # The following settings are predefined. Change them only if necessary.
 
