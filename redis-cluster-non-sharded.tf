@@ -7,25 +7,25 @@
 locals {
   # The following settings are to be specified by the user. Change them as you wish.
 
-  # Settings for the Managed Service for Valkey™ cluster
-  password = "" # Password for the Managed Service for Valkey™ cluster
+  # Settings for the Yandex Managed Service for Valkey™ cluster
+  password = "" # Password for the Yandex Managed Service for Valkey™ cluster
 
-  # (Optional) Settings for the VM in Compute Cloud. Uncomment these lines if you use a VM to connect to the cluster.
-  # vm_image_id   = "" # Public image ID for the VM. See: https://cloud.yandex.com/en/docs/compute/operations/images-with-pre-installed-software/get-list.
-  # vm_username   = "" # Username for the VM. Ubuntu images use the `ubuntu` username by default.
-  # vm_public_key = "" # Full path to the SSH public key for the VM
+  # (Optional) Settings for the VM in Yandex Compute Cloud. Uncomment these lines if you use a VM to connect to the cluster.
+  # vm_image_id   = "" # Public image ID for the VM in Yandex Compute Cloud. See: https://cloud.yandex.com/en/docs/compute/operations/images-with-pre-installed-software/get-list.
+  # vm_username   = "" # Username for the VM in Yandex Compute Cloud. Ubuntu images use the `ubuntu` username by default.
+  # vm_public_key = "" # Full path to the SSH public key for the VM in Yandex Compute Cloud
 
   # The following settings are predefined. Change them only if necessary.
 
   # Settings for the Network infrastructure
   zone_a_v4_cidr_blocks = "10.1.0.0/16" # CIDR block for the subnet in the ru-central1-a availability zone
 
-  # Settings for the Managed Service for Valkey™ cluster
-  redis_version = "7.2-valkey" # Version of the Managed Service for Valkey™
+  # Settings for the Yandex Managed Service for Valkey™ cluster
+  valkey_version = "7.2-valkey" # Version of the Yandex Managed Service for Valkey™
 }
 
 resource "yandex_vpc_network" "network" {
-  description = "Network for the Managed Service for Valkey cluster and VM"
+  description = "Network for the Yandex Managed Service for Valkey cluster and VM in Yandex Compute Cloud"
   name        = "network"
 }
 
@@ -38,7 +38,7 @@ resource "yandex_vpc_subnet" "subnet-a" {
 }
 
 resource "yandex_vpc_security_group" "security-group-redis" {
-  description = "Security group for the Managed Service for Valkey cluster"
+  description = "Security group for the Yandex Managed Service for Valkey cluster"
   network_id  = yandex_vpc_network.network.id
 
   # Required for clusters created with TLS
@@ -65,9 +65,9 @@ resource "yandex_vpc_security_group" "security-group-redis" {
   }
 }
 
-# If you use VM for connection to the cluster, uncomment these lines.
+# If you use VM in Yandex Compute Cloud for connection to the cluster, uncomment these lines.
 #resource "yandex_vpc_security_group" "security-group-vm" {
-#  description = "Security group for the VM"
+#  description = "Security group for the VM in Yandex Compute Cloud"
 #  network_id  = yandex_vpc_network.network.id
 #
 #  ingress {
@@ -87,7 +87,7 @@ resource "yandex_vpc_security_group" "security-group-redis" {
 #}
 
 resource "yandex_mdb_redis_cluster_v2" "redis-cluster" {
-  description        = "Managed Service for Valkey cluster"
+  description        = "Yandex Managed Service for Valkey cluster"
   name               = "valkey-cluster"
   environment        = "PRODUCTION"
   network_id         = yandex_vpc_network.network.id
@@ -96,7 +96,7 @@ resource "yandex_mdb_redis_cluster_v2" "redis-cluster" {
 
   config = {
     password = local.password
-    version  = local.redis_version
+    version  = local.valkey_version
   }
 
   resources = {
@@ -114,7 +114,7 @@ resource "yandex_mdb_redis_cluster_v2" "redis-cluster" {
   }
 }
 
-# If you use VM for connection to the cluster, uncomment these lines.
+# If you use VM in Yandex Compute Cloud for connection to the cluster, uncomment these lines.
 #resource "yandex_compute_instance" "vm-linux" {
 #  description = "Virtual Machine in Yandex Compute Cloud"
 #  name        = "vm-linux"
