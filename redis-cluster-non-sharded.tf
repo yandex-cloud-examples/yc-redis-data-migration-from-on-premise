@@ -10,7 +10,7 @@ locals {
   # Settings for the Yandex Managed Service for Valkey™ cluster
   password = "" # Password for the Yandex Managed Service for Valkey™ cluster
 
-  # (Optional) Settings for the VM in Yandex Compute Cloud. Uncomment these lines if you use a VM to connect to the cluster.
+  # (Optional) Settings for the VM in Compute Cloud. Uncomment these lines if you use a VM to connect to the cluster.
   # vm_image_id   = "" # Public image ID for the VM in Compute Cloud. See: https://cloud.yandex.com/en/docs/compute/operations/images-with-pre-installed-software/get-list.
   # vm_username   = "" # Username for the VM in Compute Cloud. Ubuntu images use the `ubuntu` username by default.
   # vm_public_key = "" # Full path to the SSH public key for the VM in Compute Cloud
